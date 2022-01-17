@@ -5,3 +5,12 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+
+
+puts "Destroying old data"
+Item.destroy_all
+
+puts "Seeding new data"
+Item.create(name: "Nerf Elite 2.0 Turbine CS-18", quantity: 20, type: "Nerf")
+
+puts "✔ Done seeding!"
