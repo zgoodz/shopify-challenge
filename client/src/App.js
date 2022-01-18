@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import './App.css';
+import ListItem from "./Components/ListItem";
 
 function App() {
   const [items, setItems] = useState([])
@@ -53,11 +54,7 @@ function App() {
       <h2>Inventory</h2>
       <ul>
       {items.map((item) => {
-        return <li key={item.id} name={item.name}>
-                  Name: {item.name}, Quantity: {item.quantity}, Category: {item.tag}
-                  <button>Edit</button>
-                  <button name={item.name} onClick={(e) => {handleDelete(e, item.id)}}>Delete</button>
-                </li>
+        return <ListItem item={item} items={items} setItems={setItems}/>
       })}
       </ul>
       <h2>New Item</h2>
