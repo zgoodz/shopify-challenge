@@ -2,7 +2,7 @@
 
 # shopify-challenge
 
-Thank you for visiting my Shopify Assessment for the Production Engineer Intern!
+Thank you for visiting my Shopify Assessment for the Production Engineer Intern opportunity!
 
 This web application was built using Ruby-on-Rails for the back-end and React.js for the front-end.
 The database is built on PostgreSQL.
