@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react"
 import './App.css';
 
-
-
 function App() {
   const [items, setItems] = useState([])
   const [newItem, setNewItem] = useState({
@@ -11,16 +9,23 @@ function App() {
       tag: ''
   })
 
-  console.log(newItem)
-
   useEffect(() => {
     fetch('/items')
       .then(resp => resp.json())
       .then(data => setItems(data))
   }, [])
 
-  function handleSubmit() {
-    
+  function handleSubmit(e) {
+    e.preventDefault();
+    fetch('/items', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(newItem)
+    })
+      .then(response => response.json())
+      .then(data => setItems(data))
   }
 
   function handleNewItemChange(e) {
@@ -29,13 +34,30 @@ function App() {
     })
   }
 
+  function handleDelete(e, id) {
+    const name = e.target.getAttribute("name")
+    setItems(items.filter(item => item.name !== name))
+
+    fetch(`items/${id}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json"
+      }
+    })
+
+  }
+
   return (
     <div className="App">
       <h1>Shopify Challenge</h1>
       <h2>Inventory</h2>
       <ul>
       {items.map((item) => {
-        return <li>Name: {item.name}, Quantity: {item.quantity}, Category: {item.tag}</li>
+        return <li key={item.id} name={item.name}>
+                  Name: {item.name}, Quantity: {item.quantity}, Category: {item.tag}
+                  <button>Edit</button>
+                  <button name={item.name} onClick={(e) => {handleDelete(e, item.id)}}>Delete</button>
+                </li>
       })}
       </ul>
       <h2>New Item</h2>
