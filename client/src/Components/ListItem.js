@@ -1,4 +1,5 @@
-import { useState } from "react"
+import { useState } from "react";
+import { CSVLink, CSVDownload } from "react-csv";
 
 export default function ListItem({ item, setItems, items }) {
     const [editBtn, setEditBtn] = useState(false);
@@ -7,6 +8,11 @@ export default function ListItem({ item, setItems, items }) {
         quantity: item.quantity,
         tag: item.tag
     })
+
+    const csvData = [
+        ["Name", "Quantity", "Category"],
+        [`${editItem.name}`, `${editItem.quantity}`, `${editItem.tag}`]
+    ]
 
     function handleEditBtn() {
         setEditBtn(!editBtn)
@@ -59,11 +65,13 @@ export default function ListItem({ item, setItems, items }) {
                 <input type="text" name='tag' value={editItem.tag} onChange={handleEditItemChange}></input><br></br>
                 <button>Update Item</button>
                 <button onClick={handleEditBtn}>Cancel Edit</button>
-            </form> :
+            </form> 
+            :
             <li key={item.id} name={item.name}>
                 Name: {editItem.name}, Quantity: {editItem.quantity}, Category: {editItem.tag}
                 <button onClick={handleEditBtn}>Edit</button>
-                <button name={item.name} onClick={(e) => { handleDelete(e, item.id) }}>Delete</button>
+                <button name={editItem.name} onClick={(e) => handleDelete(e, item.id)}>Delete</button>
+                <CSVLink data={csvData}>Download CSV</CSVLink>
             </li>}
         </div>
     )
